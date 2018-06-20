@@ -9,6 +9,7 @@ This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified
 
 ![Storj bash health script](http://maxrival.com/content/images/2017/05/storj-bash-healt-script-v1.0.2.png)
 
+## Installation and configuration
 Installation of required components
 ```
 apk add git
@@ -20,8 +21,7 @@ apk add ncurses
 apk add util-linux
 ```
 
-## Installation and configuration
-To use this mode, you need to configure the [config.cfg](config.cfg) configuration file and then run the script periodically sending statistics to [this site](https://stat.storj.maxrival.com/):
+You need to configure the [config.cfg](config.cfg) configuration file and then run the script periodically sending statistics to [https://stat.storj.maxrival.com](https://stat.storj.maxrival.com/):
 1. Clone project
 ```
 git clone https://github.com/milindbl/Storj-Utils
