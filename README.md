@@ -4,9 +4,6 @@
 
 **Compatible with storjshare daemon: 4.0.1, core: 7.0.0, protocol: 1.2.0**
 
-
-Current Version 1.0.5
-
 # Storj-Utils
 This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified to make it work using a Alpine Linux Docker instance running within a Synology NAS. This is a script for checking the basic parameters of the Storjshare-Cli node.<br/>
 
@@ -14,11 +11,11 @@ This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified
 
 Requiements
 
-git – required for updates of maintained script. In case the storjshare-daemon is already installed then git should be already installed too.
-jq – is used as a json-requests handler.
-net-tools – is used for network tasks.
-bc – is for mathematical calculations.
-curl – is used for http requests.
+* git – required for updates of maintained script. In case the storjshare-daemon is already installed then git should be already installed too.
+* jq – is used as a json-requests handler.
+* net-tools – is used for network tasks.
+* bc – is for mathematical calculations.
+* curl – is used for http requests.
 
 Installation of required components
 ```
@@ -28,8 +25,6 @@ apk add net-tools
 apk add bc
 apk add curl
 ```
-
-
 
 ## Installation and configuration
 To use this mode, you need to configure the [config.cfg](config.cfg) configuration file and then run the script periodically sending statistics to [this site](https://stat.storj.maxrival.com/):
@@ -44,7 +39,7 @@ CONFIGS_FOLDER=/root/.config/storjshare/configs
 WATCHDOG_LOG=/var/log/storjshare-daemon-status.log
 EMAIL=az@maxrival.com
 ```
-где:
+Where:
 * LOGS_FOLDER – StorjShare logs folder;
 * CONFIGS_FOLDER – where your configuration folder is located;
 * WATCHDOG_LOG – obsolete;
@@ -57,7 +52,7 @@ or
 ```
 sudo su -l USER -c "health.sh"
 ```
-где USER - пользователь, от которого будет работать crontab.
+where USER is the user from which crontab will work.
 
 4. Periodically run script
 
@@ -68,7 +63,7 @@ crontab -e
 ```
 or
 
-using scheduled task in Synology (Task Scheduler -> Create -> Scheduled Task -> User-defined script)
+using scheduled task in Synology (Task Scheduler -> Create -> Scheduled Task -> User-defined script) and enter this run command
 ```
 sudo docker exec storj /storj/Storj-Utils/health.sh --api > /dev/null 2>&1
 ```
