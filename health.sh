@@ -47,8 +47,8 @@ if ! hash storjshare 2>/dev/null; then
   exit 0
 fi
 
-#check netstat for linux-gnu
-if [ "$OSTYPE" == "linux-gnu" ]; then
+#check netstat for linux-gnu/linux-musl
+if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux-musl" ]]; then
   if ! hash netstat 2>/dev/null; then
     echo "Please install net-tools packet"
     exit 0
@@ -70,8 +70,8 @@ EMAIL=$(cat "$CURRENT_FOLDER"/config.cfg | grep ^EMAIL= | sed 's/^EMAIL=//')
 VER='b1.1.1'
 HOSTNAME=$(hostname)
 YEAR=$(date +%Y)
-MONTH=$(date +%-m)
-DAY=$(date +%-d)
+MONTH=$(date +%m | sed "s/^0*//g; s/\.0*/./g")
+DAY=$(date +%d | sed "s/^0*//g; s/\.0*/./g")
 DATE=$(date)
 LOCALTIME=$(date +%s)
 WATCHDOG_LOG_DATE=$(date +%x)
@@ -96,8 +96,8 @@ function help()
     ""
 }
 #------------------------------------------------------------------------------
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-  IP=$(hostname -I)
+if [[ "$OSTYPE" == "linux-gnu" || "$OSTYPE" == "linux-musl" ]]; then
+  IP=$(hostname -i)
 	SESSIONS=$(netstat -np | grep node | grep -c tcp)
 elif [[ "$OSTYPE" == "freebsd"* ]]; then
   IP=$(ifconfig | grep "inet " | grep -v "inet6"  | grep -v "127.0.0.1" | awk '{print $2}' | tr '\n' ' ')
@@ -325,7 +325,7 @@ do
 
       #--------------------------------------------------------------------------------------------
       # Share allocated
-      SHARE_ALLOCATED_TMP=$(cat < "$CONFIGS_FOLDER"/"$line".json | grep storageAllocation | tr -d ' storageAllocation":,')
+      SHARE_ALLOCATED_TMP=$(cat < "$CONFIGS_FOLDER"/config.json | grep storageAllocation | tr -d ' storageAllocation":,')
       if [ -z "$SHARE_ALLOCATED_TMP" ]; then
         if [ "$1" == --cli ]; then
           SHARE_ALLOCATED=$(echo '0')
@@ -402,7 +402,7 @@ do
       fi
       #--------------------------------------------------------------------------------------------
       # Last publish
-      LAST_PUBLISH=$(grep -R 'PUBLISH' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
+      LAST_PUBLISH=$(grep -r 'PUBLISH' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
 
       if [ -z "$LAST_PUBLISH" ]; then
       	LAST_PUBLISH=$(echo '-')
@@ -410,14 +410,14 @@ do
 
       #--------------------------------------------------------------------------------------------
       # Publish counts
-      PUBLISH_COUNT=$(grep -cR 'PUBLISH' "$LOG_FILE")
+      PUBLISH_COUNT=$(grep -cr 'PUBLISH' "$LOG_FILE")
       if [ -z "$PUBLISH_COUNT" ]; then
       	PUBLISH_COUNT=$(echo '-')
       fi
 
       #--------------------------------------------------------------------------------------------
       # Last offer
-      LAST_OFFER=$(grep -R 'OFFER' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
+      LAST_OFFER=$(grep -r 'OFFER' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
 
       if [ -z "$LAST_OFFER" ]; then
       	LAST_OFFER=$(echo '-')
@@ -425,7 +425,7 @@ do
 
       #--------------------------------------------------------------------------------------------
       # Last consigned
-      LAST_CONSIGNMENT=$(grep -R 'consignment' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
+      LAST_CONSIGNMENT=$(grep -r 'consignment' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
 
       if [ -z "$LAST_CONSIGNMENT" ]; then
       	LAST_CONSIGNMENT=$(echo '-')
@@ -433,7 +433,7 @@ do
 
       #--------------------------------------------------------------------------------------------
       # Consigned counts
-      CONSIGNMENT_COUNT=$(grep -cR 'consignment' "$LOG_FILE")
+      CONSIGNMENT_COUNT=$(grep -cr 'consignment' "$LOG_FILE")
 
       if [ -z "$CONSIGNMENT_COUNT" ]; then
       	CONSIGNMENT_COUNT=$(echo '-')
@@ -442,21 +442,21 @@ do
       #--------------------------------------------------------------------------------------------
       # Last download
       #
-      LAST_DOWNLOAD=$(grep -R 'download' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
+      LAST_DOWNLOAD=$(grep -r 'download' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
       if [ -z "$LAST_DOWNLOAD" ]; then
       	LAST_DOWNLOAD=$(echo '-')
       fi
 
       #--------------------------------------------------------------------------------------------
       # Download counts
-      DOWNLOAD_COUNT=$(grep -cR 'download' "$LOG_FILE")
+      DOWNLOAD_COUNT=$(grep -cr 'download' "$LOG_FILE")
       if [ -z "$DOWNLOAD_COUNT" ]; then
       	DOWNLOAD_COUNT=$(echo '-')
       fi
 
       #--------------------------------------------------------------------------------------------
       # Last upload
-      LAST_UPLOAD=$(grep -R 'upload' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
+      LAST_UPLOAD=$(grep -r 'upload' "$LOG_FILE" | tail -1 | awk -F ',' '{print $NF}' | cut -b 14-37)
 
       if [ -z "$LAST_UPLOAD" ]; then
       	LAST_UPLOAD=$(echo '-')
@@ -464,7 +464,7 @@ do
 
       #--------------------------------------------------------------------------------------------
       # Upload counts
-      UPLOAD_COUNT=$(grep -cR 'upload' "$LOG_FILE")
+      UPLOAD_COUNT=$(grep -cr 'upload' "$LOG_FILE")
 
       if [ -z "$UPLOAD_COUNT" ]; then
       	UPLOAD_COUNT=$(echo '-')
