@@ -9,14 +9,6 @@ This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified
 
 ![Storj bash health script](http://maxrival.com/content/images/2017/05/storj-bash-healt-script-v1.0.2.png)
 
-Requiements
-
-* git – required for updates of maintained script. In case the storjshare-daemon is already installed then git should be already installed too.
-* jq – is used as a json-requests handler.
-* net-tools – is used for network tasks.
-* bc – is for mathematical calculations.
-* curl – is used for http requests.
-
 Installation of required components
 ```
 apk add git
@@ -24,6 +16,8 @@ apk add jq
 apk add net-tools
 apk add bc
 apk add curl
+apk add ncurses
+apk add util-linux
 ```
 
 ## Installation and configuration
