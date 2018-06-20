@@ -58,7 +58,7 @@ or
 
 using scheduled task in Synology (Task Scheduler -> Create -> Scheduled Task -> User-defined script) and enter this run command
 ```
-sudo docker exec NAME_OF_DOCKER_CONTAINER /PATH_TO_SCRIPT/health.sh --api > /dev/null 2>&1
+sudo docker exec NAME_OF_DOCKER_CONTAINER bash /PATH_TO_SCRIPT/health.sh --api > /dev/null 2>&1
 ```
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
