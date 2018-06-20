@@ -5,7 +5,7 @@
 **Compatible with storjshare daemon: 4.0.1, core: 7.0.0, protocol: 1.2.0**
 
 # Storj-Utils
-This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified to make it work using a Alpine Linux Docker instance running within a Synology NAS. This is a script for checking the basic parameters of the Storjshare-Cli node.<br/>
+This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified to make it work using a Alpine Linux 3.4 Docker instance running within a Synology NAS. This is a script for checking the basic parameters of the Storjshare-Cli node.<br/>
 
 ![Storj bash health script](http://maxrival.com/content/images/2017/05/storj-bash-healt-script-v1.0.2.png)
 
@@ -58,7 +58,7 @@ sudo su -l USER -c "health.sh"
 Using crontab
 ```
 crontab -e
-*/5 * * * * /bin/bash /home/storj/scripts/Storj-Utils/health.sh --api > /dev/null 2>&1
+*/5 * * * * /bin/bash /PATH_TO_SCRIPT/health.sh --api > /dev/null 2>&1
 ```
 or
 
