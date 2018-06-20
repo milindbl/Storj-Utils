@@ -52,7 +52,6 @@ or
 ```
 sudo su -l USER -c "health.sh"
 ```
-where USER is the user from which crontab will work.
 
 4. Periodically run script
 
@@ -65,7 +64,7 @@ or
 
 using scheduled task in Synology (Task Scheduler -> Create -> Scheduled Task -> User-defined script) and enter this run command
 ```
-sudo docker exec storj /storj/Storj-Utils/health.sh --api > /dev/null 2>&1
+sudo docker exec NAME_OF_DOCKER_CONTAINER /PATH_TO_SCRIPT/health.sh --api > /dev/null 2>&1
 ```
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
