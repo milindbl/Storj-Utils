@@ -10,8 +10,9 @@ This is a fork of AntonMZ's https://github.com/AntonMZ/Storj-Utils repo modified
 ![Storj bash health script](http://maxrival.com/content/images/2017/05/storj-bash-healt-script-v1.0.2.png)
 
 ## Installation and configuration
-Installation of required components
+Installation of required components on docker instance
 ```
+apk update
 apk add git
 apk add jq
 apk add net-tools
